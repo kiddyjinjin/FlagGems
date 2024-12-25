@@ -30,7 +30,7 @@ DEFAULT_SHAPES = [
 
 def model_shapes():
     # batch sizes * seq lengths
-    BS = [2**i for i in range(0, 9, 2)]
+    BS = [2**i for i in range(1, 9, 2)]
     # attn: wqkv, wo; ffn: w13, w2
     NK = [
         # extract from llama3-8b
