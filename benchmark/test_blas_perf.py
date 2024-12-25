@@ -34,8 +34,8 @@ class BlasBenchmark(Benchmark):
             (8, 1848, 1536, 152064),
         ]
 
-        model_shaps = model_shapes()
-        return large_k_shapes + model_shaps
+        models_shapes = model_shapes()
+        return large_k_shapes + models_shapes
 
     def get_tflops(self, op, *args, **kwargs):
         total_flops = 0
