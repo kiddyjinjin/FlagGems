@@ -15,4 +15,11 @@ at::Tensor fused_add_rms_norm(const at::Tensor &input,
                               const at::Tensor &residual,
                               const at::Tensor &weight,
                               double epsilon = 1e-5);
+::std::tuple<at::Tensor, at::Tensor> rotary_embedding(
+    const at::Tensor &q,
+    const at::Tensor &k,
+    const at::Tensor &cos,
+    const at::Tensor &sin,
+    ::std::optional<const at::Tensor> &position_ids = ::std::nullopt,
+    ::std::optional<bool> rotary_interleaved = false);
 }  // namespace flag_gems
