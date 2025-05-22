@@ -13,7 +13,7 @@ std::tuple<at::Tensor, at::Tensor> rotary_embedding(const at::Tensor& q,
                                                     const at::Tensor& cos,
                                                     const at::Tensor& sin,
                                                     std::optional<at::Tensor> position_ids,
-                                                    std::optional<bool> rotary_interleaved, ) {
+                                                    bool rotary_interleaved) {
   TORCH_CHECK(k.sizes(-1) == q.sizes(-1),
               "q and k must have the same size in the last dimension, got ",
               q.sizes(-1),
