@@ -50,21 +50,25 @@ Follow these steps carefully.
    After the last `import` statement, insert:
 
    ```python
-   import os
-   if os.getenv("USE_FLAGGEMS", "false").lower() in ("1", "true", "yes"):
-        try:
-            import flag_gems
-            flag_gems.enable(record=True, path="./gems_operators.log")
-            # flag_gems.apply_gems_patches_to_vllm(verbose=True)
-            logger.info("Successfully enabled flag_gems as default ops implementation.")
-        except ImportError:
-            logger.warning("Failed to import 'flag_gems'. Falling back to default implementation.")
-        except Exception as e:
-            logger.warning(f"Failed to enable 'flag_gems': {e}. Falling back to default implementation.")
+       # --- FLAGSCALE MODIFICATION BEG ---
+       # Know more about FlagGems: https://github.com/FlagOpen/FlagGems 
+       import os
+       if os.getenv("USE_FLAGGEMS", "false").lower() in ("1", "true", "yes"):
+       try:
+              print("Try to using FLAGGEMS...")
+              import flag_gems
+              flag_gems.enable(record=True, path="/tmp/gems_oplist.log.txt")
+              logger.info("Successfully enabled flag_gems as default ops implementation.")
+       except ImportError as e:
+              # Throw an exception directly if failure occurs
+              raise ImportError("Failed to import 'flag_gems'. Please install flag_gems or set USE_FLAGGEMS=false to disable it.") from e
+       except Exception as e:
+              # Throw an exception directly if failure occurs
+              raise RuntimeError(f"Failed to enable 'flag_gems': {e}. Please check your flag_gems installation or set USE_FLAGGEMS=false to disable it.") from e
+       # --- FLAGSCALE MODIFICATION END ---
    ```  
 
-
-2. ** Confirm Successful Injection**
+3. ** Confirm Successful Injection**
 When the service starts, check logs for operator override messages like:
 
 Overriding a previously registered kernel for the same operator...
