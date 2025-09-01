@@ -11,11 +11,17 @@ NUM_PROMPT_LIST="1 100 1000 2000"
 
 MAX_LATENCY_ALLOWED_MS=100000000000
 
+
 LOG_FOLDER="$BASE/online-benchmark-$PURE_MODEL_NAME-with-gems/$TAG"
 RESULT="$LOG_FOLDER/result.txt"
 mkdir -p "$LOG_FOLDER"
 
 echo "result file: $RESULT"
+
+# Enable FlagGems integration
+export USE_FLAGGEMS=1
+echo "USE_FLAGGEMS=$USE_FLAGGEMS"
+
 
 start_server_on_gpu() {
     local gpu_id=$1
@@ -24,7 +30,7 @@ start_server_on_gpu() {
 
     pkill -f "vllm.*--port $port"
     echo "start serving GPU ${gpu_id} port ${port}"
-    CUDA_VISIBLE_DEVICES=$gpu_id \
+    CUDA_VISIBLE_DEVICES=$gpu_id USE_FLAGGEMS=1 \
     vllm serve $MODEL \
         --disable-log-requests \
         --port $port \

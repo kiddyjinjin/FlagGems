@@ -61,6 +61,7 @@ Follow these steps carefully.
             logger.warning("Failed to import 'flag_gems'. Falling back to default implementation.")
         except Exception as e:
             logger.warning(f"Failed to enable 'flag_gems': {e}. Falling back to default implementation.")
+   ```  
 
 
 2. ** Confirm Successful Injection**
