@@ -91,15 +91,6 @@ You do not need to set it manually.
 
 ## 4. Comparing Results
 
-After running both scripts, you will have two sets of results:
-
-- Base FlagScale results (from `online.sh`)
-
-- FlagScale + FlagGems results (from `online_with_gems.sh`)
-
-You can compare the `result.txt` files directly
-## 4. Comparing Results
-
 After running both scripts, you will have three sets of results:
 
 - Base FlagScale results (from `online.sh`)
