@@ -1,5 +1,4 @@
 #include <ATen/ATen.h>
-#include <cuda_runtime_api.h>
 #include <cmath>
 #include <limits>
 #include <tuple>
@@ -341,11 +340,7 @@ mha_varlan_fwd_internal(const at::Tensor& q,
     params.page_table_batch_stride = page_table_batch_stride;
     params.block_size = block_size;
 
-    int dev_id = 0;
-    cudaGetDevice(&dev_id);
-    cudaDeviceProp prop {};
-    cudaGetDeviceProperties(&prop, dev_id);
-    int num_sms = prop.multiProcessorCount > 0 ? prop.multiProcessorCount : 1;
+    int num_sms = flag_gems::utils::get_sm_count();
     // We assess which phase the requests are likely to be in and set the config accordingly.
     const double total_rows = static_cast<double>(total_q_final) * static_cast<double>(num_heads_final);
     const double avg_rows_per_sm = total_rows / static_cast<double>(num_sms);
