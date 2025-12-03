@@ -1,5 +1,7 @@
 #include "flag_gems/utils.h"
 
+#include <cuda_runtime.h>  // for cudaGetDevice, cudaGetDeviceProperties, cudaDeviceProp
+
 namespace flag_gems::utils {
 
 std::filesystem::path get_path_of_this_library() {
@@ -156,4 +158,48 @@ std::tuple<int64_t, int64_t, int64_t> parse_reduction_axes(const at::Tensor &ten
 int cdiv(int a, int b) {
   return (a + b - 1) / b;
 }
+
+const DeviceInfo &get_device_info() {
+  static const DeviceInfo info = []() {
+    DeviceInfo dev_info {};
+    if (cudaGetDevice(&dev_info.device_id) != cudaSuccess) {
+      dev_info.device_id = 0;  // fallback
+    }
+
+    cudaDeviceProp props {};
+    if (cudaGetDeviceProperties(&props, dev_info.device_id) == cudaSuccess) {
+#if CUDART_VERSION >= 11020
+      dev_info.l2_cache_size = props.l2CacheSize;
+#else
+      dev_info.l2_cache_size = 40ull * 1024 * 1024;  // fallback
+#endif
+      dev_info.sm_count = props.multiProcessorCount;
+      dev_info.major = props.major;
+    } else {
+      // fallback for A100 defaults
+      dev_info.l2_cache_size = 40ull * 1024 * 1024;
+      dev_info.sm_count = 108;
+      dev_info.major = 8;  // A100 compute capability major
+    }
+    return dev_info;
+  }();
+  return info;
+}
+
+int get_device_id() {
+  return get_device_info().device_id;
+}
+
+size_t get_l2_cache_size() {
+  return get_device_info().l2_cache_size;
+}
+
+int get_sm_count() {
+  return get_device_info().sm_count;
+}
+
+int get_major() {
+  return get_device_info().major;
+}
+
 }  // namespace flag_gems::utils

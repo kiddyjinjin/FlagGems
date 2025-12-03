@@ -26,6 +26,24 @@ std::tuple<at::Tensor, int64_t, int64_t> permute_reduction_axes_right(
     const at::Tensor &tensor, at::OptionalIntArrayRef reduction_axes_opt);
 std::tuple<int64_t, int64_t, int64_t> parse_reduction_axes(const at::Tensor &tensor, int reduction_axis);
 int cdiv(int a, int b);
+
+// Device information structure for caching GPU properties
+struct DeviceInfo {
+  int device_id;
+  size_t l2_cache_size;
+  int sm_count;
+  int major;
+};
+
+// Get cached device information (computed once per process)
+const DeviceInfo &get_device_info();
+
+// Convenience accessors for device properties
+int get_device_id();
+size_t get_l2_cache_size();
+int get_sm_count();
+int get_major();
+
 }  // namespace flag_gems::utils
 
 // Public declaration for reuse (implementation in lib/exponential_.cpp)
