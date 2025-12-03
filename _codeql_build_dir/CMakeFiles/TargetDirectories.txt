@@ -1,0 +1,2 @@
+/home/runner/work/FlagGems/FlagGems/_codeql_build_dir/CMakeFiles/edit_cache.dir
+/home/runner/work/FlagGems/FlagGems/_codeql_build_dir/CMakeFiles/rebuild_cache.dir
