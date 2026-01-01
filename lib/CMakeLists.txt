@@ -3,6 +3,7 @@ add_library(operators
             device_info.cpp
             zeros.cpp
             utils.cpp
+            shape_utils.cpp
             add.cpp
             sum.cpp
             max.cpp
@@ -30,6 +31,7 @@ add_library(operators
             rwkv_ka_fusion.cpp
             to.cpp
             clone.cpp
+            pointwise_launch.cpp
             copy.cpp)
 
 if (TRITON_GE_3P5)
