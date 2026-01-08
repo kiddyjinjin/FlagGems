@@ -6,13 +6,15 @@
 import torch
 import triton
 
+from flag_gems.fused.FLA.utils import tensor_cache
 
-# @tensor_cache
+
+@tensor_cache
 def prepare_lens(cu_seqlens: torch.LongTensor) -> torch.LongTensor:
     return cu_seqlens[1:] - cu_seqlens[:-1]
 
 
-# @tensor_cache
+@tensor_cache
 def prepare_chunk_indices(
     cu_seqlens: torch.LongTensor, chunk_size: int
 ) -> torch.LongTensor:
@@ -25,7 +27,7 @@ def prepare_chunk_indices(
     return torch.stack([indices.eq(0).cumsum(0) - 1, indices], 1).to(cu_seqlens)
 
 
-# @tensor_cache
+@tensor_cache
 def prepare_chunk_offsets(
     cu_seqlens: torch.LongTensor, chunk_size: int
 ) -> torch.LongTensor:

@@ -10,14 +10,11 @@ import triton
 import triton.language as tl
 
 from flag_gems.fused.FLA.index import prepare_chunk_indices
-from flag_gems.fused.FLA.util import FLA_GDN_FIX_BT, exp, is_nvidia_hopper
+from flag_gems.fused.FLA.triton_ops_helper import exp
+from flag_gems.fused.FLA.utils import FLA_GDN_FIX_BT, check_shared_mem, is_nvidia_hopper
 from flag_gems.utils import libentry, libtuner
 
-# from flag_gems.fused.FLA.util import FLA_GDN_FIX_BT, check_shared_mem, is_nvidia_hopper, exp # TODO
-
-
-# BKV_LIST = [64, 128] if check_shared_mem() else [32, 64]
-BKV_LIST = [64, 128]  # TODO
+BKV_LIST = [64, 128] if check_shared_mem() else [32, 64]
 NUM_WARPS = [2, 4] if is_nvidia_hopper else [2, 4, 8]
 
 

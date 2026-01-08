@@ -9,7 +9,8 @@ import triton
 import triton.language as tl
 
 from flag_gems.fused.FLA.index import prepare_chunk_indices, prepare_chunk_offsets
-from flag_gems.fused.FLA.util import exp, use_cuda_graph
+from flag_gems.fused.FLA.triton_ops_helper import exp
+from flag_gems.fused.FLA.utils import use_cuda_graph
 from flag_gems.utils import libentry, libtuner
 
 NUM_WARPS = [2, 4, 8, 16]

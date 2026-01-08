@@ -10,9 +10,8 @@ import triton
 import triton.language as tl
 
 from flag_gems.fused.FLA.index import prepare_chunk_indices
+from flag_gems.fused.FLA.utils import check_shared_mem, input_guard
 from flag_gems.utils import libentry, libtuner
-
-from .util import check_shared_mem, input_guard
 
 BS_LIST = [32, 64] if check_shared_mem() else [16, 32]
 

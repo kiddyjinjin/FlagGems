@@ -5,13 +5,13 @@
 # ruff: noqa: E501
 import torch
 
-from .chunk_delta_h import chunk_gated_delta_rule_fwd_h
-from .chunk_o import chunk_fwd_o
-from .chunk_scaled_dot_kkt import chunk_scaled_dot_kkt_fwd
-from .cumsum import chunk_local_cumsum
-from .solve_tril import solve_tril
-from .util import SUPPRESS_LEVEL
-from .wy_fast import recompute_w_u_fwd
+from flag_gems.fused.FLA.chunk_delta_h import chunk_gated_delta_rule_fwd_h
+from flag_gems.fused.FLA.chunk_o import chunk_fwd_o
+from flag_gems.fused.FLA.chunk_scaled_dot_kkt import chunk_scaled_dot_kkt_fwd
+from flag_gems.fused.FLA.cumsum import chunk_local_cumsum
+from flag_gems.fused.FLA.solve_tril import solve_tril
+from flag_gems.fused.FLA.utils import SUPPRESS_LEVEL
+from flag_gems.fused.FLA.wy_fast import recompute_w_u_fwd
 
 
 def chunk_gated_delta_rule_fwd(
