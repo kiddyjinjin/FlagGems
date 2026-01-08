@@ -10,9 +10,8 @@ import triton
 import triton.language as tl
 
 from flag_gems.fused.FLA.index import prepare_chunk_indices
+from flag_gems.fused.FLA.triton_ops_helper import exp
 from flag_gems.utils import libentry, libtuner
-
-from .util import exp
 
 
 @libentry()
