@@ -1,4 +1,3 @@
-import logging
 import warnings
 
 import torch
@@ -461,8 +460,7 @@ class use_gems:
         del self.registrar
         del current_work_registrar
         if self.record:
-            fg_logger = logging.getLogger("flag_gems")
-            teardown_flaggems_logging(fg_logger)
+            teardown_flaggems_logging()
 
     @property
     def experimental_ops(self):
