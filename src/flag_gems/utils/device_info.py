@@ -69,6 +69,8 @@ def get_device_info() -> DeviceInfo:
         sm_count = getattr(props, "multi_processor_count", None) or getattr(
             props, "multiProcessorCount", None
         )
+    import warnings
+
     if l2_cache_size is None:
         warnings.warn(
             "[device_info] Failed to get l2_cache_size, fallback to 40MB (A100 default)."
