@@ -29,7 +29,7 @@ from .accuracy_utils import (
     to_cpu,
     to_reference,
 )
-from .conftest import QUICK_MODE, TO_CPU
+from .conftest import TO_CPU
 
 random.seed(time.time() // 100)
 

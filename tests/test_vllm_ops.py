@@ -19,7 +19,6 @@ import flag_gems
 
 from .conftest import QUICK_MODE
 
-
 random.seed(42)
 
 
@@ -283,12 +282,16 @@ N_GROUP_LIST = [2, 4] if not QUICK_MODE else [4]
 TOPK_LIST = [1, 2] if not QUICK_MODE else [2]
 RENORMALIZE_LIST = [True, False] if not QUICK_MODE else [True]
 SCORING_FUNC_LIST = [0, 1] if not QUICK_MODE else [0]
-GROUPED_TOPK_DTYPE_LIST = [torch.bfloat16, torch.float32] if not QUICK_MODE else [torch.float32]
+GROUPED_TOPK_DTYPE_LIST = (
+    [torch.bfloat16, torch.float32] if not QUICK_MODE else [torch.float32]
+)
 LARGE_SCALE_DTYPE_LIST = [torch.float32, torch.bfloat16]
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
-@pytest.mark.skipif(not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available")
+@pytest.mark.skipif(
+    not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available"
+)
 @pytest.mark.grouped_topk
 @pytest.mark.parametrize("n_token", N_TOKEN_LIST)
 @pytest.mark.parametrize("n_expert", N_EXPERT_LIST)
@@ -351,7 +354,9 @@ def test_accuracy_grouped_topk(
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
-@pytest.mark.skipif(not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available")
+@pytest.mark.skipif(
+    not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available"
+)
 @pytest.mark.grouped_topk
 @pytest.mark.parametrize("n_token", [32, 64])
 @pytest.mark.parametrize("n_expert", [64])
@@ -412,7 +417,9 @@ def test_accuracy_grouped_topk_large_scale(
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
-@pytest.mark.skipif(not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available")
+@pytest.mark.skipif(
+    not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available"
+)
 @pytest.mark.grouped_topk
 @pytest.mark.parametrize("routed_scaling_factor", [1.0, 2.5])
 @pytest.mark.parametrize("renormalize", [True, False])
@@ -437,11 +444,15 @@ def test_accuracy_grouped_topk_scaling_factor(routed_scaling_factor, renormalize
     assert torch.equal(res_ids.cpu(), ref_ids.cpu()), "topk_ids mismatch"
 
     atol, rtol = get_grouped_topk_tolerance(dtype, 0, renormalize)
-    torch.testing.assert_close(res_weights.cpu(), ref_weights.cpu(), atol=atol, rtol=rtol)
+    torch.testing.assert_close(
+        res_weights.cpu(), ref_weights.cpu(), atol=atol, rtol=rtol
+    )
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
-@pytest.mark.skipif(not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available")
+@pytest.mark.skipif(
+    not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available"
+)
 @pytest.mark.grouped_topk
 @pytest.mark.parametrize("renormalize", [True, False])
 @pytest.mark.parametrize("scoring_func", [0, 1])
@@ -466,11 +477,15 @@ def test_accuracy_grouped_topk_single_token(renormalize, scoring_func):
     assert torch.equal(res_ids.cpu(), ref_ids.cpu()), "topk_ids mismatch"
 
     atol, rtol = get_grouped_topk_tolerance(dtype, scoring_func, renormalize)
-    torch.testing.assert_close(res_weights.cpu(), ref_weights.cpu(), atol=atol, rtol=rtol)
+    torch.testing.assert_close(
+        res_weights.cpu(), ref_weights.cpu(), atol=atol, rtol=rtol
+    )
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
-@pytest.mark.skipif(not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available")
+@pytest.mark.skipif(
+    not HAS_VLLM_GROUPED_TOPK, reason="vLLM grouped_topk is not available"
+)
 @pytest.mark.grouped_topk
 @pytest.mark.parametrize("renormalize", [True, False])
 def test_accuracy_grouped_topk_sigmoid(renormalize):
@@ -494,4 +509,6 @@ def test_accuracy_grouped_topk_sigmoid(renormalize):
     assert torch.equal(res_ids.cpu(), ref_ids.cpu()), "topk_ids mismatch"
 
     atol, rtol = get_grouped_topk_tolerance(dtype, 1, renormalize)
-    torch.testing.assert_close(res_weights.cpu(), ref_weights.cpu(), atol=atol, rtol=rtol)
+    torch.testing.assert_close(
+        res_weights.cpu(), ref_weights.cpu(), atol=atol, rtol=rtol
+    )
