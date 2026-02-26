@@ -75,6 +75,11 @@ def get_tolerance(dtype, scoring_func, renormalize):
         else:
             return 1e-5, 1e-5
 
+# NOTE: grouped_topk tests use direct torch.equal()/torch.allclose() with manual .cpu()
+# calls instead of gems_assert_equal()/to_cpu(). This is because vllm_grouped_topk is a
+# device-only function with no CPU reference implementation. The to_cpu() helper asserts
+# that ref must be on CPU when --ref cpu is passed, which would fail since vllm_grouped_topk
+# always runs on device.
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
 @pytest.mark.skipif(not HAS_VLLM, reason="vLLM is not installed")
