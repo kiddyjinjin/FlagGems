@@ -131,10 +131,12 @@ def test_accuracy_grouped_topk(
             scoring_func,
         )
 
-    gems_assert_equal(res_topk_ids, ref_topk_ids)
+    assert torch.equal(res_topk_ids.cpu(), ref_topk_ids.cpu()), "topk_ids mismatch"
 
     atol, rtol = get_tolerance(dtype, scoring_func, renormalize)
-    torch.testing.assert_close(res_topk_weights, ref_topk_weights, atol=atol, rtol=rtol)
+    torch.testing.assert_close(
+        res_topk_weights.cpu(), ref_topk_weights.cpu(), atol=atol, rtol=rtol
+    )
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
@@ -190,10 +192,12 @@ def test_accuracy_grouped_topk_large_scale(
             scoring_func,
         )
 
-    gems_assert_equal(res_topk_ids, ref_topk_ids)
+    assert torch.equal(res_topk_ids.cpu(), ref_topk_ids.cpu()), "topk_ids mismatch"
 
     atol, rtol = get_tolerance(dtype, scoring_func, renormalize)
-    torch.testing.assert_close(res_topk_weights, ref_topk_weights, atol=atol, rtol=rtol)
+    torch.testing.assert_close(
+        res_topk_weights.cpu(), ref_topk_weights.cpu(), atol=atol, rtol=rtol
+    )
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
@@ -219,10 +223,10 @@ def test_accuracy_grouped_topk_scaling_factor(routed_scaling_factor, renormalize
             scores.clone(), 4, 2, 2, renormalize, routed_scaling_factor, bias, 0
         )
 
-    gems_assert_equal(res_ids, ref_ids)
+    assert torch.equal(res_ids.cpu(), ref_ids.cpu()), "topk_ids mismatch"
 
     atol, rtol = get_tolerance(dtype, 0, renormalize)
-    torch.testing.assert_close(res_weights, ref_weights, atol=atol, rtol=rtol)
+    torch.testing.assert_close(res_weights.cpu(), ref_weights.cpu(), atol=atol, rtol=rtol)
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
@@ -248,10 +252,10 @@ def test_accuracy_grouped_topk_single_token(renormalize, scoring_func):
             scores.clone(), 4, 2, 2, renormalize, 1.0, bias, scoring_func
         )
 
-    gems_assert_equal(res_ids, ref_ids)
+    assert torch.equal(res_ids.cpu(), ref_ids.cpu()), "topk_ids mismatch"
 
     atol, rtol = get_tolerance(dtype, scoring_func, renormalize)
-    torch.testing.assert_close(res_weights, ref_weights, atol=atol, rtol=rtol)
+    torch.testing.assert_close(res_weights.cpu(), ref_weights.cpu(), atol=atol, rtol=rtol)
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA is not available")
@@ -276,10 +280,10 @@ def test_accuracy_grouped_topk_sigmoid(renormalize):
             scores.clone(), 4, 2, 2, renormalize, 1.0, bias, 1
         )
 
-    gems_assert_equal(res_ids, ref_ids)
+    assert torch.equal(res_ids.cpu(), ref_ids.cpu()), "topk_ids mismatch"
 
     atol, rtol = get_tolerance(dtype, 1, renormalize)
-    torch.testing.assert_close(res_weights, ref_weights, atol=atol, rtol=rtol)
+    torch.testing.assert_close(res_weights.cpu(), ref_weights.cpu(), atol=atol, rtol=rtol)
 
 
 @pytest.mark.dropout
