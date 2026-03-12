@@ -30,6 +30,10 @@ add_library(operators
             copy.cpp
             accuracy_utils.cpp)
 
+if (TRITON_GE_3P5)
+  target_compile_definitions(operators PRIVATE TRITON_GE_3P5)
+endif()
+
 target_include_directories(operators
   PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
