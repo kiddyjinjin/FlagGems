@@ -6,7 +6,7 @@ namespace flag_gems {
 // true_div: Tensor / Tensor
 at::Tensor true_div(const at::Tensor &a, const at::Tensor &b) {
   if (a.dim() == 0 && b.dim() > 0) {
-    return pointwise_dynamic::true_div_func_scalar_tensor(a.item<double>(), b);
+    return pointwise_dynamic::true_div_func_scalar_tensor(b, a.item<double>());
   }
   if (b.dim() == 0) {
     return pointwise_dynamic::true_div_func_tensor_scalar(a, b.item<double>());
@@ -27,7 +27,7 @@ at::Tensor true_div_(at::Tensor &a, const at::Tensor &b) {
 // trunc_div: trunc(a / b)
 at::Tensor trunc_div(const at::Tensor &a, const at::Tensor &b) {
   if (a.dim() == 0 && b.dim() > 0) {
-    return pointwise_dynamic::trunc_div_func_scalar_tensor(a.item<double>(), b);
+    return pointwise_dynamic::trunc_div_func_scalar_tensor(b, a.item<double>());
   }
   if (b.dim() == 0) {
     return pointwise_dynamic::trunc_div_func_tensor_scalar(a, b.item<double>());
@@ -48,7 +48,7 @@ at::Tensor trunc_div_(at::Tensor &a, const at::Tensor &b) {
 // floor_div: floor(a / b)
 at::Tensor floor_div(const at::Tensor &a, const at::Tensor &b) {
   if (a.dim() == 0 && b.dim() > 0) {
-    return pointwise_dynamic::floor_div_func_scalar_tensor(a.item<double>(), b);
+    return pointwise_dynamic::floor_div_func_scalar_tensor(b, a.item<double>());
   }
   if (b.dim() == 0) {
     return pointwise_dynamic::floor_div_func_tensor_scalar(a, b.item<double>());
@@ -102,7 +102,7 @@ at::Tensor remainder_ts(const at::Tensor &a, double b_scalar) {
 }
 
 at::Tensor remainder_st(double a_scalar, const at::Tensor &b) {
-  return pointwise_dynamic::rem_st(a_scalar, b);
+  return pointwise_dynamic::rem_st(b, a_scalar);
 }
 
 at::Tensor remainder(const at::Tensor &a, const at::Tensor &b) {
