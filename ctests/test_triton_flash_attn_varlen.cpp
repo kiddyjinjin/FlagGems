@@ -3,7 +3,6 @@
 #include <gtest/gtest.h>
 #include <algorithm>
 #include <cmath>
-#include "flag_gems/test_utils.h"
 #include <iterator>
 #include <limits>
 #include <numeric>
@@ -12,6 +11,7 @@
 #include <vector>
 #include "flag_gems/accuracy_utils.h"
 #include "flag_gems/operators.h"
+#include "flag_gems/test_utils.h"
 #include "torch/torch.h"
 
 at::Tensor ref_paged_attn_cpp(const at::Tensor& query,
