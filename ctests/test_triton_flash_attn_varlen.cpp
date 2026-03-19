@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include <algorithm>
 #include <cmath>
+#include "flag_gems/test_utils.h"
 #include <iterator>
 #include <limits>
 #include <numeric>
@@ -166,7 +167,7 @@ class FlashAttnVarlenParamTest : public ::testing::TestWithParam<VarlenParams> {
 
 TEST_P(FlashAttnVarlenParamTest, MatchesReference) {
   torch::manual_seed(1234567890);
-  const torch::Device device(torch::kCUDA, 0);
+  const torch::Device device = flag_gems::test::default_device();
 
   const std::vector<std::pair<int64_t, int64_t>> seq_lens = {
       {  1, 1328},
@@ -292,7 +293,7 @@ class FlashAttnVarlenSwapQGParamTest : public ::testing::TestWithParam<SwapParam
 
 TEST_P(FlashAttnVarlenSwapQGParamTest, MatchesReference) {
   torch::manual_seed(1234567890);
-  const torch::Device device(torch::kCUDA, 0);
+  const torch::Device device = flag_gems::test::default_device();
 
   const std::vector<std::pair<int64_t, int64_t>> seq_lens = {
       {1, 1328},
